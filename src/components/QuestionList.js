@@ -1,15 +1,16 @@
+// src/components/QuestionList.js
 import React from "react";
 import QuestionItem from "./QuestionItem";
 
 function QuestionList({ questions, onDeleteQuestion, onUpdateQuestion }) {
   return (
     <section>
-      <h1>Quiz Questions</h1>
+      <h1>Question List</h1>
       <ul>
-        {questions.map((q) => (
+        {questions.map((question) => (
           <QuestionItem
-            key={q.id}
-            question={q}
+            key={question.id}
+            question={question}
             onDeleteQuestion={onDeleteQuestion}
             onUpdateQuestion={onUpdateQuestion}
           />

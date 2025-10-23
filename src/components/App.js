@@ -1,44 +1,43 @@
 import React, { useState, useEffect } from "react";
 import AdminNavBar from "./AdminNavBar";
-import QuestionForm from "./QuestionForm";
+import QuestionForm from "./QuestionForm"; // ✅ correct import
 import QuestionList from "./QuestionList";
 
 function App() {
   const [page, setPage] = useState("List");
   const [questions, setQuestions] = useState([]);
 
-  // ✅ Fetch questions when the app loads
+  // ✅ Fetch questions from server
   useEffect(() => {
     fetch("http://localhost:4000/questions")
       .then((r) => r.json())
-      .then((data) => setQuestions(data))
-      .catch((err) => console.error("Fetch error:", err));
+      .then(setQuestions);
   }, []);
 
-  // ✅ Add new question
+  // ✅ Add a new question
   function handleAddQuestion(newQuestion) {
     setQuestions([...questions, newQuestion]);
   }
 
-  // ✅ Delete question
+  // ✅ Delete a question
   function handleDeleteQuestion(id) {
-    const updatedQuestions = questions.filter((q) => q.id !== id);
-    setQuestions(updatedQuestions);
+    const updated = questions.filter((q) => q.id !== id);
+    setQuestions(updated);
   }
 
-  // ✅ Update question (PATCH)
+  // ✅ Update a question
   function handleUpdateQuestion(updatedQuestion) {
-    const updatedQuestions = questions.map((q) =>
+    const updated = questions.map((q) =>
       q.id === updatedQuestion.id ? updatedQuestion : q
     );
-    setQuestions(updatedQuestions);
+    setQuestions(updated);
   }
 
   return (
     <main>
       <AdminNavBar onChangePage={setPage} />
       {page === "Form" ? (
-        <QuestionForm onAddQuestion={handleAddQuestion} />
+        <QuestionForm onAddQuestion={handleAddQuestion} /> // ✅ use QuestionForm here
       ) : (
         <QuestionList
           questions={questions}

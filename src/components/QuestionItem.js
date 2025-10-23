@@ -1,3 +1,4 @@
+// src/components/QuestionItem.js
 import React from "react";
 
 function QuestionItem({ question, onDeleteQuestion, onUpdateQuestion }) {
@@ -6,34 +7,43 @@ function QuestionItem({ question, onDeleteQuestion, onUpdateQuestion }) {
   function handleDelete() {
     fetch(`http://localhost:4000/questions/${id}`, {
       method: "DELETE",
-    })
-      .then(() => onDeleteQuestion(id))
-      .catch((err) => console.error("DELETE error:", err));
+    }).then(() => onDeleteQuestion(id));
   }
 
   function handleChange(e) {
-    const updatedIndex = parseInt(e.target.value);
-
+    const newCorrectIndex = parseInt(e.target.value) - 1;
     fetch(`http://localhost:4000/questions/${id}`, {
       method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ correctIndex: updatedIndex }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ correctIndex: newCorrectIndex }),
     })
       .then((r) => r.json())
-      .then((updatedQuestion) => onUpdateQuestion(updatedQuestion))
-      .catch((err) => console.error("PATCH error:", err));
+      .then((updatedQuestion) => onUpdateQuestion(updatedQuestion));
   }
 
   return (
     <li>
-      <h4>Question {id}</h4>
-      <h5>Prompt: {prompt}</h5>
+      <h3>{prompt}</h3>
+      <ul>
+        {answers.map((answer, index) => (
+          <li
+            key={index}
+            style={{
+              fontWeight: index === correctIndex ? "bold" : "normal",
+            }}
+          >
+            {answer}
+          </li>
+        ))}
+      </ul>
       <label>
         Correct Answer:
-        <select value={correctIndex} onChange={handleChange}>
-          {answers.map((answer, index) => (
-            <option key={index} value={index}>
-              {answer}
+        <select value={correctIndex + 1} onChange={handleChange}>
+          {answers.map((_, index) => (
+            <option key={index} value={index + 1}>
+              {index + 1}
             </option>
           ))}
         </select>
