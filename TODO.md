@@ -1,6 +1,0 @@
-- [x] Fix QuestionForm.js: Rename component to QuestionForm, adjust correctIndex to 1-based (input min 1 max 4, body parseInt(formData.correctIndex) - 1)
-- [x] Fix QuestionItem.js: Adjust select value={correctIndex + 1}, options value={index + 1}, handleChange newCorrectIndex = parseInt(e.target.value) - 1
-- [x] Run npm install
-- [x] Run npm run server
-- [x] Run npm start
-- [x] Test the app for CRUD operations
